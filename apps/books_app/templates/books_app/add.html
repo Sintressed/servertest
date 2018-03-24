@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <title>add</title>
+    </head>
+    <body>
+        {% if messages %}
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul><br>
+        {% endif %}
+        Add a New Book Title and a Review: <a href = "{% url 'index' %}">Home</a> <a href = "/">Logout</a>
+        <form action = "{% url 'add_process' %}" method = "POST">
+            {% csrf_token %}
+            Book title:<input type = 'text' name = "title"><br>
+            Author:<br>
+            Choose from the list: <select name = "author">
+                <option value = "">Select</option>
+                {% for author in authors %}
+                    <option value = {{author.name}}>{{author.name}}</option>
+                {% endfor %}
+            </select><br>
+            Or add a new author: <input type = "text" name = "add_author"><br>
+            Review: <br><input type = "text" name = "review"><br>
+            Rating:<select name = "rating">
+                <option value = 1>1</option>
+                <option value = 2>2</option>
+                <option value = 3>3</option>
+                <option value = 4>4</option>
+                <option value = 5>5</option>
+            </select>
+            <br>
+            <input type = "submit" value = "Add Book and Review">
+        </form>
+    </body>
+</html>

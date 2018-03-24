@@ -1,0 +1,16 @@
+<html>
+    <head>
+        <title>User</title>
+    </head>
+    <body>
+        <a href = "{% url 'index' %}">Home</a>  <a href = "{% url 'add' %}">Add Book Review</a>  <a href = "/">logout</a>
+        User Alias: {{user.alias}}<br>
+        Name: {{user.name}}<br>
+        Email: {{user.email}}<br>
+        Total Reviews: {{review}}<br><br>
+        Posted reviews on the following books:<br>
+        {% for book in books %}
+        <a href = "{% url 'view' book.books.id %}">{{book.books.title}}<br></a>
+        {% endfor %}
+    </body>
+</html>

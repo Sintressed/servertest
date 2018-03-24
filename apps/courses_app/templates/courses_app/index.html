@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <title>Index</title>
+        {% load staticfiles %}
+        <link rel = 'stylesheet' type = 'text/css' href= "{% static 'courses_app/style.css' %}">
+    </head>
+    <body>
+        <div class = "body">
+                <ul>
+                        {% if messages %}
+                            {% for message in messages %}
+                            <div class = "red"><li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li></div>
+                            {% endfor %}
+                        </ul><br>
+                        {% endif %}
+            <div class = "top">
+                <h3>Add a new course</h3>
+                <form action = "{% url 'add' %}" method = "POST">
+                    {% csrf_token %}
+                    <table>
+                        <tr>
+                            <td><label>Name:</label></td>
+                            <td><input type = "text" name = "name"><br></td>
+                        </tr>
+                        <tr>
+                            <td><label>Description:</label></td>
+                            <td><input type = "text" name = "description" id = "desc"></td>
+                        </tr>
+                    </table>
+                    <input type = "submit" value = "Add" id = "add">
+                </form>
+                </div>
+                <div class = "bottom">
+                    <h3>Courses</h3>
+                    <table id = "course">
+                        <tr>
+                            <th>Course Name</th>
+                            <th>Description</th>
+                            <th>Date Added</th>
+                            <th>Actions</th>
+                        </tr>
+                        {% for course in courseid %}
+                        <tr>
+                            <td>{{course.name}}</td>
+                            <td>{{course.description}}</td>
+                            <td>{{course.created_at|date:"M d,Y"}}</td>
+                            <td><a href = "{% url 'prompt' course.id %}">remove</a></td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

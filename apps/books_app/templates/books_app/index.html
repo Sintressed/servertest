@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <title>Index</title>
+    </head>
+    <body>
+        {{notify}}
+        Welcome, {{request.session.name}}!<a href = "{% url 'add' %}">Add Book and review</a>  <a href = "/">logout</a><br>
+        Recent book reviews:<br>
+        {% for review in reviews %}
+            ______________________________________________<br>
+            <h3><a href = " {% url 'view' review.books.id %}">{{review.books.title}}</a></h3>
+            Rating : {{review.rating}}/5 stars<br>
+            <a href = "{% url 'user' review.reviewer.id %}">{{review.reviewer.alias}}</a> says: <i>{{review.review}}</i><br>
+            <i>posted on: {{review.created_at|date:"M d,Y"}}</i><br>
+            {% if review.reviewer.name == request.session.name %}
+                <form action = "{% url 'delete_process' %}" method = "POST">
+                        {% csrf_token %}
+                        <input type = "hidden" name = "rev_id" value = "{{review.id}}">
+                        <input type = "hidden" name = "book_id" value = "{{review.books.id}}">
+                        <input type = "hidden" name = "return_index" value = "add">
+                        <input type = "submit" value = "Delete this review">
+                    </form><br>
+            {% endif %}
+        {% endfor %}
+        <br>
+        ---name view--<br>
+        Other books with reviews:<br>
+        {% for book in books %}
+        <a href = "{% url 'view' book.id %}">{{book.title}}</a><br>
+        {% endfor %}
+
+    </body>
+</html>

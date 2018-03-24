@@ -1,0 +1,70 @@
+<html>
+    <head>
+        <title>login/registration</title>
+        <META charset="UTF-8">
+    </head>
+    <body>
+        
+        <div class = "body">
+                <ul>
+                    {% if messages %}
+                        {% for message in messages %}
+                        <div class = "red"><li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li></div>
+                        {% endfor %}
+                    </ul><br>
+                    {% endif %}
+            <div class = "top">
+                    <form action = "{% url 'register_process' %}" method = "POST">
+                        {% csrf_token %}
+                        <table>
+                            <th>
+                                Registration
+                            </th>
+                            <tr>
+                                <td>First Name:</td>
+                                <td><input type = "text" name = "first_name"></td>
+                            </tr>
+                            <tr>
+                                <td>Last name:</td>
+                                <td><input type = "text" name = "last_name"></td>
+                            </tr>
+                            <tr>
+                                <td>Email:</td>
+                                <td><input type = "text" name = "email_address"></td>
+                            </tr>
+                            <tr>
+                                <td>Password:</td>
+                                <td><input type="password" name="password"></td>
+                            </tr>
+                            <tr>
+                                <td>confirm pw:</td>
+                                <td><input type="password" name="confirm_password"></td>
+                            </tr>
+                            <tr>
+                                <td id = "submit1"><input type = "submit" name = "submit_register" value = "register"></td>
+                            </tr>                    
+                        </table>
+                    </form>
+            </div>
+            <div class = "bottom">
+                    <form action = "{% url 'login_process' %}" method = "POST">
+                        {% csrf_token %}
+                        <table>
+                            <th>login</th>
+                            <tr>
+                                <td>Email:</td>
+                                <td><input type = "text" name = "login_email_address"></td>
+                            </tr>
+                            <tr>
+                                <td>Password:</td>
+                                <td><input type="password" name="login_password"></td>
+                            </tr>
+                            <tr>
+                                <td><input type = "submit" name = "submit_login" value = 'login'></td>
+                            </tr>
+                        </table>
+                    </form>
+            </div>
+        </div>
+    </body>
+</html>
